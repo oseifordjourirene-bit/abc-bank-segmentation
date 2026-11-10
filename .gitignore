@@ -1,0 +1,11 @@
+# Data is versioned with DVC, never committed to Git
+data/raw/*
+data/processed/*
+!data/**/.gitkeep
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+mlruns/
+.env
