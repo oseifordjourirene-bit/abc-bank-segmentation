@@ -64,6 +64,14 @@ Source: Santander Product Recommendation, Kaggle (2016), file `train_ver2.csv`. 
 
 The three `current_account_*` variants are grouped with `current_account` as one current-account indicator.
 
+## Module 3 updates
+
+- `spouse_of_employee`, `last_primary_date`, `address_type` and `resident_flag` are dropped in cleaning (near-empty or constant).
+- `customer_id` is replaced by `customer_key` (salted HMAC-SHA256) before any analytics table is written.
+- Exact `age` is never stored after anonymisation; only `age_band` (<18, 18-24, ..., 65+) is kept, in the restricted audit file.
+- `household_income` is capped at the 99th percentile; missing values are filled with the overall median and flagged in `income_was_missing`.
+- Sex is kept as the source codes H and V; their meaning is not documented by the data provider.
+
 ## Derived features (Module 3)
 
 | Feature | Definition |
@@ -71,4 +79,8 @@ The three `current_account_*` variants are grouped with `current_account` as one
 | `product_count` | Number of products held in the month |
 | `products_added_3m` / `products_dropped_3m` | Products gained or lost over the last three months |
 | `months_active_6m` | Months flagged active in the last six |
-| `has_salary`, `has_term_deposit`, `has_card` | Grouped product indicators used to profile segments |
+| `has_current_account`, `has_salary`, `has_pension_credit`, `has_savings`, `has_term_deposit`, `has_investments`, `has_credit`, `has_card`, `has_e_account`, `has_direct_debit`, `has_junior_account` | Grouped product indicators used to profile segments |
+| `months_observed` | Months the customer appears in the six-month window |
+| `active_now` | Active flag in the latest month |
+| `drift_signal` | 1 if active three months ago and inactive now, or only dropping products |
+| `income_was_missing` | 1 if income was imputed |
