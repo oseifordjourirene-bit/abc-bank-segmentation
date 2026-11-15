@@ -1,0 +1,13 @@
+.git
+.venv
+__pycache__/
+*.pyc
+data/
+logs/
+gx/
+reports/
+notebooks/
+docs/
+.env
+.idea/
+.pytest_cache/
