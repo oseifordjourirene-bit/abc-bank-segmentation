@@ -1,18 +1,15 @@
-# ABC Bank Customer Segmentation - Python 3.11
-pandas>=2.2,<2.3
-numpy>=1.26,<2.0
-pyarrow>=15
+# ABC Bank Customer Segmentation - Python 3.11 (full project)
+pandas
+numpy
+pyarrow
 prefect>=3.1,<4
-great_expectations>=1.3,<1.6
-faker>=25
-scikit-learn>=1.5.1
-lightgbm>=4.5.0
-shap>=0.46.0
-fairlearn>=0.11,<0.13
-mlflow>=2.16.2
-dvc>=3.55.2
-matplotlib>=3.9.2
-seaborn>=0.13.2
-jupyterlab>=4.2.5
-streamlit>=1.38.0
-pytest>=8.3.3
+great_expectations>=1.3,<2
+fairlearn>=0.11
+faker
+pytest
+scikit-learn
+lightgbm
+shap
+mlflow
+dvc
+matplotlib
