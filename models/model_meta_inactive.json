@@ -1,0 +1,69 @@
+{
+  "registered_model": "abc-bank-drift-model-inactive",
+  "target_rule": "inactive",
+  "model_version": 1,
+  "champion": "logistic_regression",
+  "threshold": 0.5444905980531298,
+  "features": [
+    "product_count",
+    "products_added_2m",
+    "products_dropped_2m",
+    "months_active_3m",
+    "months_observed_3m",
+    "tenure_months",
+    "household_income",
+    "has_current_account",
+    "has_salary",
+    "has_pension_credit",
+    "has_term_deposit",
+    "has_investments",
+    "has_credit",
+    "has_card",
+    "has_e_account",
+    "has_direct_debit",
+    "has_junior_account",
+    "income_was_missing",
+    "new_customer_flag",
+    "is_primary_customer",
+    "joining_channel",
+    "bank_segment",
+    "relation_type"
+  ],
+  "target": "drift_3m",
+  "trained_at": "2026-11-19T03:50:28+00:00",
+  "mlflow_run_id": "c41085a4542544b6bcb878afb19759c0",
+  "acceptance_passed": true,
+  "data": {
+    "target_rule": "inactive",
+    "customers_active_at_cutoff": 20844,
+    "left_before_outcome_month": 8,
+    "modelling_rows": 20836,
+    "positives": 631,
+    "drift_rate": 0.0303,
+    "feature_window": "2015-12-28 to 2016-02-28",
+    "outcome_month": "2016-05-28",
+    "n_features": 23,
+    "target_definition": "Became inactive (activity flag 1 in February, 0 in May)"
+  },
+  "split": {
+    "train_rows": 16668,
+    "test_rows": 4168,
+    "train_drift_rate": 0.0303,
+    "test_drift_rate": 0.0302
+  },
+  "test_metrics": {
+    "accuracy": 0.7152,
+    "precision": 0.0759,
+    "recall": 0.754,
+    "f1": 0.138,
+    "roc_auc": 0.8124,
+    "pr_auc": 0.1769,
+    "top20_capture": 0.6508,
+    "flagged_rate": 0.3001
+  },
+  "protected_attributes_excluded": [
+    "age_band",
+    "sex",
+    "foreign_born_flag"
+  ]
+}
