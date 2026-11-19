@@ -1,0 +1,25 @@
+case,rank,rule,weight,effect
+High risk (correctly flagged),1,Products added (Dec-Feb) > 0.00,0.2347,raises risk
+High risk (correctly flagged),2,0.00 < Has direct debit <= 1.00,0.1475,raises risk
+High risk (correctly flagged),3,Has credit card > 0.00,0.1151,raises risk
+High risk (correctly flagged),4,Tenure (months) > 152.00,-0.0552,lowers risk
+High risk (correctly flagged),5,Has credit product > 0.00,0.0525,raises risk
+High risk (correctly flagged),6,Has term deposit <= 0.00,-0.0352,lowers risk
+High risk (correctly flagged),7,2.00 < Products held <= 3.00,0.0304,raises risk
+High risk (correctly flagged),8,Has junior account <= 0.00,0.0299,raises risk
+Borderline,1,Products added (Dec-Feb) <= 0.00,-0.2369,lowers risk
+Borderline,2,0.00 < Has direct debit <= 1.00,0.1467,raises risk
+Borderline,3,Has credit card <= 0.00,-0.1097,lowers risk
+Borderline,4,Tenure (months) > 152.00,-0.0462,lowers risk
+Borderline,5,Has credit product <= 0.00,-0.0374,lowers risk
+Borderline,6,Products held > 3.00,0.0349,raises risk
+Borderline,7,Has term deposit <= 0.00,-0.0319,lowers risk
+Borderline,8,Segment (other) <= 0.00,-0.0267,lowers risk
+Low risk,1,Products added (Dec-Feb) <= 0.00,-0.2328,lowers risk
+Low risk,2,Has direct debit <= 0.00,-0.1398,lowers risk
+Low risk,3,Has credit card <= 0.00,-0.119,lowers risk
+Low risk,4,Tenure (months) > 152.00,-0.0506,lowers risk
+Low risk,5,Pension paid in <= 0.00,-0.0319,lowers risk
+Low risk,6,Has credit product <= 0.00,-0.0311,lowers risk
+Low risk,7,Products held <= 1.00,-0.0288,lowers risk
+Low risk,8,Salary paid in <= 0.00,-0.0275,lowers risk

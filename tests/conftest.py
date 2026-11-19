@@ -19,7 +19,8 @@ def isolated_audit_log(tmp_path, monkeypatch):
         kwargs["log_path"] = tmp_path / "audit_test.jsonl"
         return original(*args, **kwargs)
 
-    for module in ["src.ingest", "src.clean", "src.anonymise", "src.features", "src.bias"]:
+    for module in ["src.ingest", "src.clean", "src.anonymise", "src.features", "src.bias",
+                   "src.model.dataset"]:
         monkeypatch.setattr(f"{module}.audit", _audit, raising=False)
     monkeypatch.setenv("ANON_SALT", "test-salt")
     yield tmp_path / "audit_test.jsonl"

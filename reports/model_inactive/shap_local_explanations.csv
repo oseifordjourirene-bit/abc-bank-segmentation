@@ -1,0 +1,16 @@
+case,rank,feature,value,shap,effect
+High risk (correctly flagged),1,Months active (Dec-Feb),-6.417,2.3625,raises risk
+High risk (correctly flagged),2,Products held,-0.754,0.6532,raises risk
+High risk (correctly flagged),3,Tenure (months),-1.137,0.4121,raises risk
+High risk (correctly flagged),4,Relation type A,0.0,-0.1729,lowers risk
+High risk (correctly flagged),5,Channel KHQ,1.0,0.1518,raises risk
+Borderline,1,Products held,-0.754,0.6532,raises risk
+Borderline,2,Months active (Dec-Feb),0.197,-0.1642,lowers risk
+Borderline,3,Has current account,0.0,0.1246,raises risk
+Borderline,4,Months observed (Dec-Feb),0.126,0.0846,raises risk
+Borderline,5,Products dropped (Dec-Feb),-0.278,-0.0737,lowers risk
+Low risk,1,Products held,5.059,-4.6574,lowers risk
+Low risk,2,Tenure (months),2.03,-0.6909,lowers risk
+Low risk,3,Has direct debit,1.0,-0.2434,lowers risk
+Low risk,4,Has investments,1.0,-0.2227,lowers risk
+Low risk,5,Salary paid in,1.0,-0.1843,lowers risk

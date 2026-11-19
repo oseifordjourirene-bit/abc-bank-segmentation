@@ -1,0 +1,4 @@
+case,test_row,risk,actual_drift
+High risk (correctly flagged),205,0.872,1
+Borderline,267,0.465,0
+Low risk,497,0.192,0
