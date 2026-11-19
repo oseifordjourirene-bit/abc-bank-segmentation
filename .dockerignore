@@ -11,3 +11,6 @@ docs/
 .env
 .idea/
 .pytest_cache/
+mlruns/
+mlartifacts/
+mlflow.db
