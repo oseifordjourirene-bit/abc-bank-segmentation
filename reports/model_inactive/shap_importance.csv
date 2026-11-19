@@ -1,0 +1,37 @@
+feature,mean_abs_shap,mean_shap
+Products held,0.6885,-0.0685
+Tenure (months),0.319,0.0112
+Months active (Dec-Feb),0.2297,-0.0824
+Has direct debit,0.1153,-0.0225
+Months observed (Dec-Feb),0.1081,0.0574
+Products dropped (Dec-Feb),0.104,-0.0292
+Salary paid in,0.0737,0.0064
+Income was missing,0.0674,0.0114
+Segment 02 - PARTICULARES,0.0602,0.006
+Has current account,0.0539,-0.0114
+Has investments,0.0446,-0.0055
+Has e-account,0.0446,-0.0019
+Relation type A,0.0381,-0.0001
+Channel KFC,0.0368,0.0016
+Channel KAT,0.0305,-0.0037
+Has term deposit,0.0302,0.0062
+Relation type I,0.0275,-0.0023
+Household income,0.0274,0.0006
+Segment 03 - UNIVERSITARIO,0.0262,0.0066
+Segment 01 - TOP,0.0194,-0.0015
+Channel KHQ,0.0181,-0.0002
+Channel (other),0.018,0.0041
+Has credit card,0.0154,0.0021
+New customer,0.0146,-0.0033
+Pension paid in,0.0133,0.0004
+Products added (Dec-Feb),0.0125,-0.0026
+Channel KHM,0.0124,-0.0002
+Has credit product,0.0105,0.0005
+Channel KFA,0.0103,0.0026
+Channel KHE,0.0072,-0.0025
+Channel KHK,0.0028,-0.0004
+Channel KHN,0.0019,-0.0006
+Segment (other),0.0016,0.001
+Relation type (other),0.001,0.0005
+Has junior account,0.0002,0.0001
+Primary customer,0.0,0.0

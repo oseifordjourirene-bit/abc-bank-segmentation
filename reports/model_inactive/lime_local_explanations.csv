@@ -1,0 +1,25 @@
+case,rank,rule,weight,effect
+High risk (correctly flagged),1,Products held <= -0.75,0.2539,raises risk
+High risk (correctly flagged),2,Tenure (months) <= -0.91,0.1106,raises risk
+High risk (correctly flagged),3,Products dropped (Dec-Feb) <= -0.28,-0.0992,lowers risk
+High risk (correctly flagged),4,Has direct debit <= 0.00,0.0578,raises risk
+High risk (correctly flagged),5,Has investments <= 0.00,0.0504,raises risk
+High risk (correctly flagged),6,Income was missing <= 0.00,0.0447,raises risk
+High risk (correctly flagged),7,Channel KHQ > 0.00,0.0441,raises risk
+High risk (correctly flagged),8,Channel KHN <= 0.00,-0.0406,lowers risk
+Borderline,1,Products held <= -0.75,0.2594,raises risk
+Borderline,2,Products dropped (Dec-Feb) <= -0.28,-0.0857,lowers risk
+Borderline,3,Has direct debit <= 0.00,0.0626,raises risk
+Borderline,4,Has investments <= 0.00,0.0597,raises risk
+Borderline,5,Salary paid in <= 0.00,0.0483,raises risk
+Borderline,6,Income was missing <= 0.00,0.0374,raises risk
+Borderline,7,Channel KHM <= 0.00,-0.0352,lowers risk
+Borderline,8,Channel KHQ <= 0.00,-0.0318,lowers risk
+Low risk,1,Products held > 0.41,-0.3486,lowers risk
+Low risk,2,Tenure (months) > 0.90,-0.1279,lowers risk
+Low risk,3,Products dropped (Dec-Feb) <= -0.28,-0.0894,lowers risk
+Low risk,4,0.00 < Has direct debit <= 1.00,-0.066,lowers risk
+Low risk,5,Has investments > 0.00,-0.0547,lowers risk
+Low risk,6,Salary paid in > 0.00,-0.0536,lowers risk
+Low risk,7,Channel KHQ <= 0.00,-0.035,lowers risk
+Low risk,8,Relation type I <= 0.00,0.0316,raises risk

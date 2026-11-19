@@ -1,0 +1,13 @@
+attribute,attr_key,group,customers,base_drift_rate,selection_rate,recall_tpr,false_positive_rate,disparate_impact,status
+Age band,age_band,18-24,711,0.0633,0.7806,0.9333,0.7703,2.6007,Check: DI outside 0.8-1.25
+Age band,age_band,25-34,626,0.0335,0.4649,0.9048,0.4496,1.5488,Check: DI outside 0.8-1.25
+Age band,age_band,35-44,985,0.0244,0.1868,0.5417,0.1779,0.6224,Check: DI outside 0.8-1.25
+Age band,age_band,45-54,971,0.0206,0.1133,0.6,0.103,0.3774,Check: DI outside 0.8-1.25
+Age band,age_band,55-64,451,0.0111,0.1153,0.4,0.1121,0.3841,Too small to judge (<500)
+Age band,age_band,65+,365,0.0219,0.0877,0.5,0.0784,0.2921,Too small to judge (<500)
+Age band,age_band,<18,49,0.0612,0.4898,1.0,0.4565,1.6319,Too small to judge (<500)
+Age band,age_band,SUPPRESSED,10,0.0,0.3,,0.3,0.9995,Too small to judge (<500)
+Sex (H/V as coded in source),sex,H,1812,0.0287,0.3433,0.8462,0.3284,1.1437,OK
+Sex (H/V as coded in source),sex,V,2356,0.0314,0.267,0.6892,0.2533,0.8895,OK
+Foreign-born,foreign_born_flag,N,3983,0.0301,0.2993,0.7667,0.2848,0.9971,OK
+Foreign-born,foreign_born_flag,S,185,0.0324,0.3189,0.5,0.3128,1.0626,Too small to judge (<500)

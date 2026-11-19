@@ -1,0 +1,8 @@
+scenario,mean_change_in_risk,mean_abs_change,decisions_flipped_pct
+Income -20%,0.0004,0.003,0.58
+Income +20%,-0.0003,0.0025,0.67
+Tenure -12 months,0.0083,0.0123,1.66
+Tenure +12 months,-0.0077,0.0158,1.32
+Income reported missing,-0.0007,0.0054,1.1
+Random noise on numbers (5%),0.0001,0.0024,0.41
+Inactive one more month (large change),0.2412,0.2415,62.31

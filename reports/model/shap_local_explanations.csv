@@ -1,0 +1,16 @@
+case,rank,feature,value,shap,effect
+High risk (correctly flagged),1,Products added (Dec-Feb),1.0,0.1747,raises risk
+High risk (correctly flagged),2,Has direct debit,1.0,0.0724,raises risk
+High risk (correctly flagged),3,Has credit card,1.0,0.0622,raises risk
+High risk (correctly flagged),4,Has credit product,1.0,0.0332,raises risk
+High risk (correctly flagged),5,Products held,3.0,0.0242,raises risk
+Borderline,1,Has direct debit,1.0,0.076,raises risk
+Borderline,2,Products added (Dec-Feb),0.0,-0.05,lowers risk
+Borderline,3,Tenure (months),233.0,-0.0393,lowers risk
+Borderline,4,Products dropped (Dec-Feb),1.0,-0.0332,lowers risk
+Borderline,5,Products held,8.0,0.0247,raises risk
+Low risk,1,Has direct debit,0.0,-0.073,lowers risk
+Low risk,2,Tenure (months),235.0,-0.056,lowers risk
+Low risk,3,Products added (Dec-Feb),0.0,-0.0475,lowers risk
+Low risk,4,Products held,1.0,-0.025,lowers risk
+Low risk,5,Months active (Dec-Feb),3.0,-0.021,lowers risk
