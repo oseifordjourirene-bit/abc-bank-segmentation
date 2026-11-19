@@ -9,6 +9,8 @@ __pycache__/
 .venv/
 .pytest_cache/
 mlruns/
+mlartifacts/
+mlflow.db
 .env
 # IDE
 .idea/
