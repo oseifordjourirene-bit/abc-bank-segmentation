@@ -1,0 +1,26 @@
+{
+  "Profile A: just added products, fully active": {
+    "product_count": 4, "products_added_2m": 2, "products_dropped_2m": 0, "months_active_3m": 3,
+    "months_observed_3m": 3, "tenure_months": 30, "household_income": 80000,
+    "has_current_account": 1, "has_salary": 0, "has_pension_credit": 0, "has_term_deposit": 0,
+    "has_investments": 0, "has_credit": 1, "has_card": 1, "has_e_account": 1, "has_direct_debit": 1,
+    "has_junior_account": 0, "income_was_missing": 0, "new_customer_flag": 0, "is_primary_customer": 1,
+    "joining_channel": "KFC", "bank_segment": "02 - PARTICULARES", "relation_type": "A"
+  },
+  "Profile B: one account, quiet until February": {
+    "product_count": 1, "products_added_2m": 0, "products_dropped_2m": 0, "months_active_3m": 1,
+    "months_observed_3m": 3, "tenure_months": 14, "household_income": 60000,
+    "has_current_account": 1, "has_salary": 0, "has_pension_credit": 0, "has_term_deposit": 0,
+    "has_investments": 0, "has_credit": 0, "has_card": 0, "has_e_account": 0, "has_direct_debit": 0,
+    "has_junior_account": 0, "income_was_missing": 0, "new_customer_flag": 0, "is_primary_customer": 1,
+    "joining_channel": "KHQ", "bank_segment": "03 - UNIVERSITARIO", "relation_type": "A"
+  },
+  "Profile C: long-standing salary customer": {
+    "product_count": 5, "products_added_2m": 0, "products_dropped_2m": 0, "months_active_3m": 3,
+    "months_observed_3m": 3, "tenure_months": 180, "household_income": 150000,
+    "has_current_account": 1, "has_salary": 1, "has_pension_credit": 0, "has_term_deposit": 0,
+    "has_investments": 1, "has_credit": 0, "has_card": 1, "has_e_account": 1, "has_direct_debit": 1,
+    "has_junior_account": 0, "income_was_missing": 0, "new_customer_flag": 0, "is_primary_customer": 1,
+    "joining_channel": "KAT", "bank_segment": "02 - PARTICULARES", "relation_type": "A"
+  }
+}
