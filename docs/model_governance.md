@@ -39,5 +39,5 @@ delete them under the bank's retention schedule; record the decision in the RAID
 
 ## 5. Explanation store
 Every prediction is saved with its inputs (behavioural only), score, decision, contact tier, model version
-and top factors. Access: Internal Control and the model owner. Retention: 7 years. The demo on Hugging
-Face resets on restart; production uses the bank's governed database in Ghana (CISD 2026; Act 843).
+and top factors. Access: Internal Control and the model owner. Retention: 7 years. The free Render demo
+resets on restart; production uses the bank's governed database in Ghana (CISD 2026; Act 843).
