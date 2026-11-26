@@ -1,0 +1,185 @@
+model,month,feature,psi,status,ks_pvalue
+main,2016-03,product_count,0.0001,ok,0.9997
+main,2016-03,products_added_2m,0.0151,ok,0.0
+main,2016-03,products_dropped_2m,0.0037,ok,0.3889
+main,2016-03,months_active_3m,0.0004,ok,1.0
+main,2016-03,months_observed_3m,0.0005,ok,1.0
+main,2016-03,tenure_months,0.0016,ok,0.0052
+main,2016-03,household_income,0.0003,ok,0.9907
+main,2016-03,has_current_account,0.0,ok,
+main,2016-03,has_salary,0.0001,ok,
+main,2016-03,has_pension_credit,0.0,ok,
+main,2016-03,has_term_deposit,0.0001,ok,
+main,2016-03,has_investments,0.0,ok,
+main,2016-03,has_credit,0.0,ok,
+main,2016-03,has_card,0.0,ok,
+main,2016-03,has_e_account,0.0,ok,
+main,2016-03,has_direct_debit,0.0001,ok,
+main,2016-03,has_junior_account,0.0,ok,
+main,2016-03,income_was_missing,0.0003,ok,
+main,2016-03,new_customer_flag,0.0022,ok,
+main,2016-03,is_primary_customer,0.0,ok,
+main,2016-03,joining_channel,0.0013,ok,
+main,2016-03,bank_segment,0.0001,ok,
+main,2016-03,relation_type,0.0002,ok,
+main,2016-04,product_count,0.0002,ok,0.9951
+main,2016-04,products_added_2m,0.0024,ok,0.312
+main,2016-04,products_dropped_2m,0.0022,ok,0.0703
+main,2016-04,months_active_3m,0.0002,ok,1.0
+main,2016-04,months_observed_3m,0.0011,ok,0.9966
+main,2016-04,tenure_months,0.0103,ok,0.0
+main,2016-04,household_income,0.001,ok,0.5736
+main,2016-04,has_current_account,0.0002,ok,
+main,2016-04,has_salary,0.0002,ok,
+main,2016-04,has_pension_credit,0.0,ok,
+main,2016-04,has_term_deposit,0.0003,ok,
+main,2016-04,has_investments,0.0001,ok,
+main,2016-04,has_credit,0.0,ok,
+main,2016-04,has_card,0.0,ok,
+main,2016-04,has_e_account,0.0002,ok,
+main,2016-04,has_direct_debit,0.0002,ok,
+main,2016-04,has_junior_account,0.0,ok,
+main,2016-04,income_was_missing,0.0011,ok,
+main,2016-04,new_customer_flag,0.0083,ok,
+main,2016-04,is_primary_customer,0.0,ok,
+main,2016-04,joining_channel,0.0044,ok,
+main,2016-04,bank_segment,0.0003,ok,
+main,2016-04,relation_type,0.0002,ok,
+main,2016-05,product_count,0.0003,ok,0.6547
+main,2016-05,products_added_2m,0.0011,ok,0.89
+main,2016-05,products_dropped_2m,0.0051,ok,0.0234
+main,2016-05,months_active_3m,0.0013,ok,0.7452
+main,2016-05,months_observed_3m,0.0021,ok,0.8963
+main,2016-05,tenure_months,0.025,ok,0.0
+main,2016-05,household_income,0.0021,ok,0.1631
+main,2016-05,has_current_account,0.0005,ok,
+main,2016-05,has_salary,0.0005,ok,
+main,2016-05,has_pension_credit,0.0004,ok,
+main,2016-05,has_term_deposit,0.0009,ok,
+main,2016-05,has_investments,0.0001,ok,
+main,2016-05,has_credit,0.0,ok,
+main,2016-05,has_card,0.0,ok,
+main,2016-05,has_e_account,0.0009,ok,
+main,2016-05,has_direct_debit,0.0005,ok,
+main,2016-05,has_junior_account,0.0,ok,
+main,2016-05,income_was_missing,0.0023,ok,
+main,2016-05,new_customer_flag,0.0133,ok,
+main,2016-05,is_primary_customer,0.0001,ok,
+main,2016-05,joining_channel,0.0088,ok,
+main,2016-05,bank_segment,0.0011,ok,
+main,2016-05,relation_type,0.0005,ok,
+main,Simulated stress,product_count,0.0003,ok,0.6547
+main,Simulated stress,products_added_2m,0.0011,ok,0.89
+main,Simulated stress,products_dropped_2m,0.0051,ok,0.0234
+main,Simulated stress,months_active_3m,0.7987,alert,0.0
+main,Simulated stress,months_observed_3m,0.0021,ok,0.8963
+main,Simulated stress,tenure_months,0.025,ok,0.0
+main,Simulated stress,household_income,0.9222,alert,0.0
+main,Simulated stress,has_current_account,0.0005,ok,
+main,Simulated stress,has_salary,0.0005,ok,
+main,Simulated stress,has_pension_credit,0.0004,ok,
+main,Simulated stress,has_term_deposit,0.0009,ok,
+main,Simulated stress,has_investments,0.0001,ok,
+main,Simulated stress,has_credit,0.0,ok,
+main,Simulated stress,has_card,0.0,ok,
+main,Simulated stress,has_e_account,0.0009,ok,
+main,Simulated stress,has_direct_debit,0.0005,ok,
+main,Simulated stress,has_junior_account,0.0,ok,
+main,Simulated stress,income_was_missing,0.0023,ok,
+main,Simulated stress,new_customer_flag,0.0133,ok,
+main,Simulated stress,is_primary_customer,0.0001,ok,
+main,Simulated stress,joining_channel,0.0088,ok,
+main,Simulated stress,bank_segment,0.0011,ok,
+main,Simulated stress,relation_type,0.0005,ok,
+inactive_only,2016-03,product_count,0.0001,ok,0.9997
+inactive_only,2016-03,products_added_2m,0.0151,ok,0.0
+inactive_only,2016-03,products_dropped_2m,0.0037,ok,0.3889
+inactive_only,2016-03,months_active_3m,0.0004,ok,1.0
+inactive_only,2016-03,months_observed_3m,0.0005,ok,1.0
+inactive_only,2016-03,tenure_months,0.0016,ok,0.0052
+inactive_only,2016-03,household_income,0.0003,ok,0.9907
+inactive_only,2016-03,has_current_account,0.0,ok,
+inactive_only,2016-03,has_salary,0.0001,ok,
+inactive_only,2016-03,has_pension_credit,0.0,ok,
+inactive_only,2016-03,has_term_deposit,0.0001,ok,
+inactive_only,2016-03,has_investments,0.0,ok,
+inactive_only,2016-03,has_credit,0.0,ok,
+inactive_only,2016-03,has_card,0.0,ok,
+inactive_only,2016-03,has_e_account,0.0,ok,
+inactive_only,2016-03,has_direct_debit,0.0001,ok,
+inactive_only,2016-03,has_junior_account,0.0,ok,
+inactive_only,2016-03,income_was_missing,0.0003,ok,
+inactive_only,2016-03,new_customer_flag,0.0022,ok,
+inactive_only,2016-03,is_primary_customer,0.0,ok,
+inactive_only,2016-03,joining_channel,0.0013,ok,
+inactive_only,2016-03,bank_segment,0.0001,ok,
+inactive_only,2016-03,relation_type,0.0002,ok,
+inactive_only,2016-04,product_count,0.0002,ok,0.9951
+inactive_only,2016-04,products_added_2m,0.0024,ok,0.312
+inactive_only,2016-04,products_dropped_2m,0.0022,ok,0.0703
+inactive_only,2016-04,months_active_3m,0.0002,ok,1.0
+inactive_only,2016-04,months_observed_3m,0.0011,ok,0.9966
+inactive_only,2016-04,tenure_months,0.0103,ok,0.0
+inactive_only,2016-04,household_income,0.001,ok,0.5736
+inactive_only,2016-04,has_current_account,0.0002,ok,
+inactive_only,2016-04,has_salary,0.0002,ok,
+inactive_only,2016-04,has_pension_credit,0.0,ok,
+inactive_only,2016-04,has_term_deposit,0.0003,ok,
+inactive_only,2016-04,has_investments,0.0001,ok,
+inactive_only,2016-04,has_credit,0.0,ok,
+inactive_only,2016-04,has_card,0.0,ok,
+inactive_only,2016-04,has_e_account,0.0002,ok,
+inactive_only,2016-04,has_direct_debit,0.0002,ok,
+inactive_only,2016-04,has_junior_account,0.0,ok,
+inactive_only,2016-04,income_was_missing,0.0011,ok,
+inactive_only,2016-04,new_customer_flag,0.0083,ok,
+inactive_only,2016-04,is_primary_customer,0.0,ok,
+inactive_only,2016-04,joining_channel,0.0044,ok,
+inactive_only,2016-04,bank_segment,0.0003,ok,
+inactive_only,2016-04,relation_type,0.0002,ok,
+inactive_only,2016-05,product_count,0.0003,ok,0.6547
+inactive_only,2016-05,products_added_2m,0.0011,ok,0.89
+inactive_only,2016-05,products_dropped_2m,0.0051,ok,0.0234
+inactive_only,2016-05,months_active_3m,0.0013,ok,0.7452
+inactive_only,2016-05,months_observed_3m,0.0021,ok,0.8963
+inactive_only,2016-05,tenure_months,0.025,ok,0.0
+inactive_only,2016-05,household_income,0.0021,ok,0.1631
+inactive_only,2016-05,has_current_account,0.0005,ok,
+inactive_only,2016-05,has_salary,0.0005,ok,
+inactive_only,2016-05,has_pension_credit,0.0004,ok,
+inactive_only,2016-05,has_term_deposit,0.0009,ok,
+inactive_only,2016-05,has_investments,0.0001,ok,
+inactive_only,2016-05,has_credit,0.0,ok,
+inactive_only,2016-05,has_card,0.0,ok,
+inactive_only,2016-05,has_e_account,0.0009,ok,
+inactive_only,2016-05,has_direct_debit,0.0005,ok,
+inactive_only,2016-05,has_junior_account,0.0,ok,
+inactive_only,2016-05,income_was_missing,0.0023,ok,
+inactive_only,2016-05,new_customer_flag,0.0133,ok,
+inactive_only,2016-05,is_primary_customer,0.0001,ok,
+inactive_only,2016-05,joining_channel,0.0088,ok,
+inactive_only,2016-05,bank_segment,0.0011,ok,
+inactive_only,2016-05,relation_type,0.0005,ok,
+inactive_only,Simulated stress,product_count,0.0003,ok,0.6547
+inactive_only,Simulated stress,products_added_2m,0.0011,ok,0.89
+inactive_only,Simulated stress,products_dropped_2m,0.0051,ok,0.0234
+inactive_only,Simulated stress,months_active_3m,0.7987,alert,0.0
+inactive_only,Simulated stress,months_observed_3m,0.0021,ok,0.8963
+inactive_only,Simulated stress,tenure_months,0.025,ok,0.0
+inactive_only,Simulated stress,household_income,0.9222,alert,0.0
+inactive_only,Simulated stress,has_current_account,0.0005,ok,
+inactive_only,Simulated stress,has_salary,0.0005,ok,
+inactive_only,Simulated stress,has_pension_credit,0.0004,ok,
+inactive_only,Simulated stress,has_term_deposit,0.0009,ok,
+inactive_only,Simulated stress,has_investments,0.0001,ok,
+inactive_only,Simulated stress,has_credit,0.0,ok,
+inactive_only,Simulated stress,has_card,0.0,ok,
+inactive_only,Simulated stress,has_e_account,0.0009,ok,
+inactive_only,Simulated stress,has_direct_debit,0.0005,ok,
+inactive_only,Simulated stress,has_junior_account,0.0,ok,
+inactive_only,Simulated stress,income_was_missing,0.0023,ok,
+inactive_only,Simulated stress,new_customer_flag,0.0133,ok,
+inactive_only,Simulated stress,is_primary_customer,0.0001,ok,
+inactive_only,Simulated stress,joining_channel,0.0088,ok,
+inactive_only,Simulated stress,bank_segment,0.0011,ok,
+inactive_only,Simulated stress,relation_type,0.0005,ok,
