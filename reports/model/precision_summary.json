@@ -1,0 +1,11 @@
+{
+  "target_rule": "inactive_or_dropping",
+  "test_customers": 4168,
+  "drifters": 359,
+  "base_rate": 0.0861,
+  "pr_auc": 0.2746,
+  "pr_auc_lift": 3.19,
+  "threshold": 0.4653,
+  "tier1_share": 0.1,
+  "tier1_score_cutoff": 0.6737
+}
