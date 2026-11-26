@@ -9,7 +9,7 @@ Behavioural customer segmentation for a Ghanaian retail bank (ABC Bank, a pseudo
 | --- | --- |
 | Stakeholder dashboard (Module 5) | https://abc-bank-segmentation-nxu.streamlit.app |
 | Monitoring dashboard | https://abc-bank-segmentation-nxu.streamlit.app/Monitoring |
-| Live API (`/docs` to try `/predict`) | https://HF-USERNAME-abc-bank-drift-api.hf.space/docs |
+| Live API (`/docs` to try `/predict`) | https://abc-bank-drift-api.onrender.com/docs (free tier: first request after 15 idle minutes takes about a minute) |
 | CI/CD pipeline | GitHub Actions, `.github/workflows/ci.yml` |
 
 **Scope delivered.** Phase 1 delivers the early-warning model for the *Drifting inactive* segment end to end
@@ -44,12 +44,12 @@ abc-bank-segmentation/
 ├── notebooks/         # SHAP analysis notebook
 ├── reports/           # bias report (Module 3); model, fairness and explainability outputs (Module 4)
 ├── src/               # pipeline stages (Module 3) and src/model/ for training, fairness and XAI (Module 4)
-├── scripts/           # API demo script, Hugging Face deployment script
+├── scripts/           # API demo script
 ├── tests/             # pytest suite (pipeline, model, API, dashboard, monitoring, retraining)
-├── deploy/            # Hugging Face Space card and a sample API request
+├── deploy/            # sample API request used by the CI smoke test
 ├── .github/workflows/ # CI/CD: tests, Docker builds, API deployment
 ├── Dockerfile                  # Module 3 pipeline image
-├── Dockerfile.api              # live API image (Hugging Face Spaces)
+├── Dockerfile.api              # live API image (Render)
 ├── Dockerfile.monitoring       # monitoring + retraining job
 ├── docker-compose.yml          # pipeline + API + monitoring + dashboard
 ├── requirements.txt            # full project
@@ -139,5 +139,5 @@ python -m flows.retrain_flow             # the monthly Prefect flow: monitor, re
 - **Docker Compose:** `docker compose up -d api dashboard`; jobs with `docker compose run --rm pipeline`
   and `docker compose run --rm monitoring` (copy `.env.example` to `.env` first).
 - **CI/CD:** every push and pull request runs the tests in two environments and builds the images;
-  a push to `main` deploys the API to Hugging Face Spaces (needs the `HF_TOKEN` secret and `HF_SPACE_ID` variable).
+  a push to `main` deploys the API to Render through a deploy hook (the `RENDER_DEPLOY_HOOK` secret).
 - **Governance:** monitoring thresholds, incident response and decommissioning are in `docs/model_governance.md`.

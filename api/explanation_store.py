@@ -6,7 +6,7 @@ the score, the decision and the top drivers of that score. Internal Control can 
 any decision by its request_id and see why it was made.
 
 Location: the EXPLANATION_DB environment variable (default logs/explanations.db).
-On the free Hugging Face demo the file resets when the Space restarts; in production the
+On the free Render demo the file resets when the service restarts or sleeps; in production the
 same table would live in the bank's governed database with a 7-year retention rule.
 """
 import json
