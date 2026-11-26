@@ -1,7 +1,7 @@
 # CI/CD for the ABC Bank drift project
 #  - every push and pull request: lint + full test suite (no customer data needed: tests use synthetic data)
 #  - every push and pull request: build the three Docker images (pipeline, API, monitoring)
-#  - push to main: deploy the API to Hugging Face Spaces (Streamlit Cloud redeploys the dashboard itself)
+#  - push to main: deploy the API to Render through its deploy hook (Streamlit Cloud redeploys the dashboard itself)
 name: ci-cd
 
 on:
@@ -67,19 +67,13 @@ jobs:
             -H 'Content-Type: application/json' -d '{"age": 30}')" = "422"
 
   deploy-api:
+    # Continuous deployment: only after every test and the Docker smoke test pass on main
     runs-on: ubuntu-latest
     needs: [pipeline-tests, test, docker]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment: production
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-      - name: Deploy to Hugging Face Spaces
+      - name: Trigger the Render deploy
         env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          HF_SPACE_ID: ${{ vars.HF_SPACE_ID }}
-        run: |
-          pip install "huggingface_hub>=0.24"
-          python scripts/deploy_hf_space.py
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: curl -fsS -X POST "$RENDER_DEPLOY_HOOK" > /dev/null && echo "Render deploy started"
