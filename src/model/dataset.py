@@ -21,12 +21,18 @@ def _snapshot(monthly: pd.DataFrame, month: str) -> pd.DataFrame:
     return monthly[monthly["snapshot_date"] == pd.Timestamp(month)].set_index("customer_key")
 
 
-def build_features(monthly: pd.DataFrame) -> pd.DataFrame:
-    """Customer features using only the months up to and including the cutoff."""
-    window = monthly[monthly["snapshot_date"].isin(pd.to_datetime(FEATURE_MONTHS))]
-    assert window["snapshot_date"].max() <= pd.Timestamp(CUTOFF), "feature window leaks past cutoff"
-    now = _snapshot(window, CUTOFF)
-    start = _snapshot(window, FEATURE_MONTHS[0])[PRODUCT_COLUMNS].reindex(now.index).fillna(0)
+def build_features(monthly: pd.DataFrame, feature_months=None, cutoff=None) -> pd.DataFrame:
+    """Customer features using only the months up to and including the cutoff.
+
+    Defaults to the training window. Monitoring passes later windows (for example
+    January to March 2016) to score newer cohorts with exactly the same feature logic.
+    """
+    feature_months = list(feature_months or FEATURE_MONTHS)
+    cutoff = cutoff or CUTOFF
+    window = monthly[monthly["snapshot_date"].isin(pd.to_datetime(feature_months))]
+    assert window["snapshot_date"].max() <= pd.Timestamp(cutoff), "feature window leaks past cutoff"
+    now = _snapshot(window, cutoff)
+    start = _snapshot(window, feature_months[0])[PRODUCT_COLUMNS].reindex(now.index).fillna(0)
     products_now = now[PRODUCT_COLUMNS]
 
     f = pd.DataFrame(index=now.index)
