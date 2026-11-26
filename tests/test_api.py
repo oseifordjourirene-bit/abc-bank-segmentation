@@ -46,3 +46,14 @@ def test_predict_returns_probability_and_decision(client):
 def test_protected_attributes_are_rejected(client):
     assert client.post("/predict", json={**EXAMPLE, "age": 30}).status_code == 422
     assert client.post("/predict", json={**EXAMPLE, "sex": "H"}).status_code == 422
+
+
+def test_prediction_is_stored_with_its_explanation(client, tmp_path, monkeypatch):
+    monkeypatch.setenv("EXPLANATION_DB", str(tmp_path / "store.db"))
+    body = client.post("/predict", json=EXAMPLE).json()
+    assert body["contact_tier"] in {"none", "tier 1: relationship-manager call", "tier 2: digital nudge"}
+    stored = client.get(f"/explanations/{body['request_id']}")
+    assert stored.status_code == 200
+    assert stored.json()["score"] == pytest.approx(body["drift_probability"], abs=1e-4)
+    assert "age" not in stored.json()["inputs"]
+    assert client.get("/explanations/not-a-real-id").status_code == 404

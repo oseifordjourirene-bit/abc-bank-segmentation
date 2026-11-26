@@ -22,6 +22,7 @@ MODELS = {
         "model": ROOT / "models" / "drift_model.joblib",
         "meta": ROOT / "models" / "model_meta.json",
         "reports": ROOT / "reports" / "model",
+        "suffix": "",
     },
     "inactive": {
         "label": "Comparison model: drift = goes inactive only",
@@ -29,6 +30,7 @@ MODELS = {
         "model": ROOT / "models" / "drift_model_inactive.joblib",
         "meta": ROOT / "models" / "model_meta_inactive.json",
         "reports": ROOT / "reports" / "model_inactive",
+        "suffix": "_inactive",
     },
 }
 
@@ -179,3 +181,55 @@ def headline(meta: dict) -> dict:
             "flagged": m["flagged_rate"], "accepted": meta["acceptance_passed"],
             "threshold": meta["threshold"], "champion": PLAIN_NAMES.get(meta["champion"], meta["champion"]),
             "definition": d["target_definition"]}
+
+
+# ---------- Final project: local explanations, precision review, monitoring ----------
+MONITORING_DIR = ROOT / "reports" / "monitoring"
+FEATURE_NAMES = {
+    "product_count": "Products held", "products_added_2m": "Products added (last 2 months)",
+    "products_dropped_2m": "Products dropped (last 2 months)", "months_active_3m": "Months active (of 3)",
+    "months_observed_3m": "Months on record (of 3)", "tenure_months": "Months with the bank",
+    "household_income": "Household income", "has_current_account": "Has current account",
+    "has_salary": "Salary paid in", "has_pension_credit": "Pension paid in", "has_term_deposit": "Has term deposit",
+    "has_investments": "Has investments", "has_credit": "Has a loan or mortgage", "has_card": "Has a card",
+    "has_e_account": "Has e-account", "has_direct_debit": "Has direct debit",
+    "has_junior_account": "Has junior account", "income_was_missing": "Income not recorded",
+    "new_customer_flag": "New customer", "is_primary_customer": "Primary customer",
+    "joining_channel": "Joining channel", "bank_segment": "Bank segment", "relation_type": "Relationship type",
+}
+
+
+def load_reference(key: str) -> dict:
+    from src.model.explain_local import load_reference_profile
+    return load_reference_profile(ROOT / "models" / f"reference_profile{MODELS[key]['suffix']}.json")
+
+
+def local_explanation(model, profile: dict, features: list, reference: dict, top: int = 5) -> pd.DataFrame:
+    """Top drivers of one customer's score (same method the API stores for audit)."""
+    from src.model.explain_local import local_contributions
+    rows = local_contributions(model, profile, features, reference, top)
+    df = pd.DataFrame(rows, columns=["feature", "value", "typical_value", "contribution"])
+    df["factor"] = df["feature"].map(FEATURE_NAMES).fillna(df["feature"])
+    return df
+
+
+def load_json(key: str, name: str) -> dict:
+    return json.loads((MODELS[key]["reports"] / f"{name}.json").read_text(encoding="utf-8"))
+
+
+def break_even_precision(cost_per_contact: float, value_if_retained: float, save_rate: float) -> float:
+    """Contacting pays when precision x save_rate x value_if_retained > cost_per_contact."""
+    if value_if_retained <= 0 or save_rate <= 0:
+        return float("inf")
+    return cost_per_contact / (value_if_retained * save_rate)
+
+
+def load_monitoring(name: str) -> pd.DataFrame:
+    return pd.read_csv(MONITORING_DIR / f"{name}.csv")
+
+
+def monitoring_status(alerts: pd.DataFrame, month: str) -> dict:
+    """Traffic light per check for one month: red if any alert of that type."""
+    month_alerts = alerts[alerts["month"] == month]
+    return {t: ("alert" if (month_alerts["type"] == t).any() else "ok")
+            for t in ["data drift", "prediction drift", "fairness"]}

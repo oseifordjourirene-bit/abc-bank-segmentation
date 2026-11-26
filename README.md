@@ -2,6 +2,20 @@
 
 Behavioural customer segmentation for a Ghanaian retail bank (ABC Bank, a pseudonym), built for the BAN6800 Business Analytics capstone at Nexford University.
 
+![ci-cd](https://github.com/oseifordjourirene-bit/abc-bank-segmentation/actions/workflows/ci.yml/badge.svg)
+
+## Live system
+| What | Link |
+| --- | --- |
+| Stakeholder dashboard (Module 5) | https://abc-bank-segmentation-nxu.streamlit.app |
+| Monitoring dashboard | https://abc-bank-segmentation-nxu.streamlit.app/Monitoring |
+| Live API (`/docs` to try `/predict`) | https://HF-USERNAME-abc-bank-drift-api.hf.space/docs |
+| CI/CD pipeline | GitHub Actions, `.github/workflows/ci.yml` |
+
+**Scope delivered.** Phase 1 delivers the early-warning model for the *Drifting inactive* segment end to end
+(data pipeline, model, explainability, fairness, API, dashboard, monitoring). Clustering the other four
+segments is phase 2, to be built on ABC Bank's own data (see the integrated report for why).
+
 ## Goal
 Understand customers by how they actually bank, group them into behavioural segments, and recommend the product each customer is most likely to need:
 
@@ -23,14 +37,21 @@ The five segments are business hypotheses; clustering decides the final grouping
 abc-bank-segmentation/
 ├── data/              # raw and processed data (not committed; DVC-tracked)
 ├── api/               # FastAPI service with a /predict endpoint (Module 4)
+├── dashboard/         # Streamlit stakeholder dashboard (Module 5)
 ├── docs/              # data dictionary, pipeline, governance, anonymisation plan, modelling, RAID log
 ├── flows/             # Prefect orchestration DAG
 ├── models/            # trained drift model (.joblib) and its metadata
 ├── notebooks/         # SHAP analysis notebook
 ├── reports/           # bias report (Module 3); model, fairness and explainability outputs (Module 4)
 ├── src/               # pipeline stages (Module 3) and src/model/ for training, fairness and XAI (Module 4)
-├── tests/             # pytest suite
-├── Dockerfile
+├── scripts/           # API demo script, Hugging Face deployment script
+├── tests/             # pytest suite (pipeline, model, API, dashboard, monitoring, retraining)
+├── deploy/            # Hugging Face Space card and a sample API request
+├── .github/workflows/ # CI/CD: tests, Docker builds, API deployment
+├── Dockerfile                  # Module 3 pipeline image
+├── Dockerfile.api              # live API image (Hugging Face Spaces)
+├── Dockerfile.monitoring       # monitoring + retraining job
+├── docker-compose.yml          # pipeline + API + monitoring + dashboard
 ├── requirements.txt            # full project
 ├── requirements-pipeline.txt   # Module 3 pipeline only
 ├── requirements-model.txt      # Module 4 model, explainability and API
@@ -82,6 +103,19 @@ Optional comparison with a narrower target: `python -m src.model.run_all --targe
 Outputs: `models/drift_model.joblib`, `reports/model/` (model card, fairness report, charts, SHAP and LIME
 explanations, counterfactuals, sensitivity analysis) and the MLflow registry entry `abc-bank-drift-model`.
 
+## Stakeholder dashboard (Module 5)
+
+Interactive dashboard for the Head of Retail Banking and Head of Marketing: overview, what drives the score,
+what-if explorer, example customers, fairness and ethics check, and limits. It uses the saved models and the
+aggregated Module 4 tables only; no customer records.
+
+```bash
+pip install streamlit plotly
+streamlit run dashboard/app.py          # local
+python scripts/api_demo.py              # API demo (start uvicorn api.main:app first)
+```
+Deployed on Streamlit Community Cloud from `dashboard/app.py` (dependencies in `dashboard/requirements.txt`).
+
 ## Project management
 Work is planned on a Jira Scrum board: 24 tickets across five sprints, one sprint per course module. Commit messages quote the Jira ticket key (for example, `S2-02 Rename columns to English`).
 
@@ -90,3 +124,20 @@ Git Flow: `main` (released), `develop`, `feature/*`, `release/*`, `hotfix/*`.
 
 ## Ethics
 Age, sex, nationality and province are excluded from clustering and used only for fairness audits (Fairlearn). Predictions are explained with SHAP.
+
+
+## Final project: precision review, monitoring, retraining and deployment
+Run after the pipeline (Module 3) and training (Module 4), from the repository root:
+```
+python -m src.model.precision_review     # precision at each contact level + two-tier policy -> reports/model*/
+python -m src.monitoring.monitor         # data, prediction and fairness drift -> reports/monitoring/
+python -m src.model.retrain              # candidate model + promotion gates, logged to MLflow
+python -m flows.retrain_flow             # the monthly Prefect flow: monitor, retrain only on drift
+```
+- **Explanation store:** every `/predict` call is saved with its top factors (`api/explanation_store.py`);
+  `GET /explanations/{request_id}` retrieves it for audit.
+- **Docker Compose:** `docker compose up -d api dashboard`; jobs with `docker compose run --rm pipeline`
+  and `docker compose run --rm monitoring` (copy `.env.example` to `.env` first).
+- **CI/CD:** every push and pull request runs the tests in two environments and builds the images;
+  a push to `main` deploys the API to Hugging Face Spaces (needs the `HF_TOKEN` secret and `HF_SPACE_ID` variable).
+- **Governance:** monitoring thresholds, incident response and decommissioning are in `docs/model_governance.md`.

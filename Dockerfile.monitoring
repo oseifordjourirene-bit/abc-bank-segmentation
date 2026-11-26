@@ -1,0 +1,14 @@
+# Monitoring + retraining job (Evidently, Fairlearn, MLflow, Prefect)
+FROM python:3.11-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PREFECT_HOME=/app/.prefect
+WORKDIR /app
+COPY requirements-api.txt requirements-monitoring.txt ./
+RUN pip install --no-cache-dir -r requirements-api.txt -r requirements-monitoring.txt
+COPY src/ src/
+COPY flows/ flows/
+COPY models/ models/
+RUN useradd --create-home mlops && chown -R mlops /app
+USER mlops
+# Reads data/processed (pipeline output), writes reports/monitoring and models/candidates
+VOLUME ["/app/data", "/app/reports", "/app/mlruns"]
+CMD ["python", "-m", "flows.retrain_flow"]

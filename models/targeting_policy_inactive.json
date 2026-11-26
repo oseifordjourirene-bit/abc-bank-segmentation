@@ -1,0 +1,6 @@
+{
+  "threshold": 0.5445,
+  "tier1_share": 0.1,
+  "tier1_score_cutoff": 0.6844,
+  "source": "test-set precision review (src/model/precision_review.py)"
+}

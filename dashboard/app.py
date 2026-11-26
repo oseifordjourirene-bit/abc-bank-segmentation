@@ -61,7 +61,10 @@ st.title("Which active customers are about to go quiet?")
 st.caption(f"{L.MODELS[key]['label']} · {H['champion']} · drift measured over 3 months")
 
 tabs = st.tabs(["Overview", "What drives the score", "What-if explorer", "Example customers",
-                "Fairness & ethics", "Limits & transparency"])
+                "Fairness & ethics", "Limits & transparency", "Targeting & precision"])
+st.sidebar.markdown("---")
+st.sidebar.markdown("**Monitoring:** open the *Monitoring* page in the menu above for monthly drift and "
+                    "fairness checks.")
 
 # ---------- 1. Overview ----------
 with tabs[0]:
@@ -179,6 +182,19 @@ with tabs[3]:
                         f"active {prof['months_active_3m']} of 3 months · {prof['tenure_months']} months with the bank")
             st.progress(min(max(sc, 0.0), 1.0), text=f"Score {sc:.2f}")
             st.write(L.plain_explanation(model, prof, meta["features"], meta["threshold"]))
+            loc = L.local_explanation(model, prof, meta["features"], L.load_reference(key))
+            if len(loc):
+                loc = loc.iloc[::-1]
+                fig = px.bar(loc, x="contribution", y="factor", orientation="h",
+                             color=loc["contribution"].gt(0).map({True: "Raises the score", False: "Lowers the score"}),
+                             color_discrete_map={"Raises the score": RED, "Lowers the score": GREEN},
+                             title="Why this score: top factors compared with a typical customer")
+                fig.update_xaxes(title="Change in score", zeroline=True, zerolinecolor=GREY)
+                fig.update_yaxes(title="")
+                st.plotly_chart(style(fig, 260))
+    st.caption("Local explanation: each factor is set to the typical customer's value and the change in score is "
+               "shown. The live API stores the same explanation with every prediction, for audit. "
+               "SHAP and LIME (Module 4 notebook) give the same leading drivers.")
 
 # ---------- 5. Fairness ----------
 with tabs[4]:
@@ -246,3 +262,57 @@ with tabs[5]:
     st.markdown("- Which behaviour matters more to the business: customers going quiet, or customers dropping products?\n"
                 "- How many offers per real drifter is acceptable for the campaign budget?\n"
                 "- What level of difference in offer rates between age groups is acceptable, and who signs it off?")
+
+# ---------- 7. Targeting & precision (final project) ----------
+with tabs[6]:
+    st.markdown("**How many customers should we contact?** Precision is low at the agreed line because only a "
+                "small share of customers drift. Contacting fewer, riskier customers raises precision but misses "
+                "more drifters. Test-set results (customers the model never saw):")
+    pts = get_table(key, "precision_operating_points")
+    summ = L.load_json(key, "precision_summary")
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Drifters among test customers", f"{summ['base_rate']:.1%}")
+    c1.caption("Precision of contacting at random")
+    c2.metric("PR-AUC", f"{summ['pr_auc']:.3f}")
+    c2.caption(f"{summ['pr_auc_lift']:.1f} times the random baseline")
+    c3.metric("Riskiest 10%: precision", f"{pts.iloc[1]['precision']:.0%}")
+    c3.caption(f"vs {pts.iloc[-1]['precision']:.0%} at the agreed threshold")
+    long = pts.melt(id_vars="operating_point", value_vars=["precision", "recall"], var_name="measure")
+    long["measure"] = long["measure"].map({"precision": "Precision (offers reaching a drifter)",
+                                           "recall": "Recall (drifters caught)"})
+    fig = px.bar(long, x="operating_point", y="value", color="measure", barmode="group", text_auto=".0%",
+                 color_discrete_sequence=[GOLD, NAVY], title="Precision against recall at each contact level")
+    fig.update_yaxes(tickformat=".0%", range=[0, 1], title="")
+    fig.update_xaxes(title="")
+    st.plotly_chart(style(fig, 380))
+    show = pts.rename(columns={"operating_point": "Contact level", "share_flagged": "Share contacted",
+                               "drifters_caught": "Drifters caught", "recall": "Recall", "precision": "Precision",
+                               "lift_vs_random": "Lift vs random", "offers_per_drifter": "Offers per drifter"})
+    show = show.drop(columns=["customers_flagged"])
+    for c, f in {"Share contacted": "{:.0%}", "Recall": "{:.1%}", "Precision": "{:.1%}",
+                 "Lift vs random": "{:.2f}", "Offers per drifter": "{:.1f}"}.items():
+        show[c] = show[c].map(f.format)
+    st.dataframe(show, hide_index=True)
+
+    st.markdown("**Two-tier contact policy** (keeps 70% recall, spends the costly channel where precision is high)")
+    tiers = get_table(key, "precision_tiers")
+    tshow = tiers.rename(columns={"operating_point": "Tier", "customers_flagged": "Customers",
+                                  "drifters_caught": "Drifters", "recall": "Share of all drifters",
+                                  "precision": "Precision", "offers_per_drifter": "Offers per drifter"})
+    tshow = tshow[["Tier", "Customers", "Drifters", "Share of all drifters", "Precision", "Offers per drifter"]]
+    for c, f in {"Share of all drifters": "{:.0%}", "Precision": "{:.1%}", "Offers per drifter": "{:.1f}"}.items():
+        tshow[c] = tshow[c].map(f.format)
+    st.dataframe(tshow, hide_index=True)
+
+    st.markdown("**Break-even check:** enter your own campaign figures. Contacting pays when precision × "
+                "save rate × value of a kept customer is greater than the cost of one contact.")
+    b1, b2, b3 = st.columns(3)
+    cost = b1.number_input("Cost per contact (GHS)", min_value=0.0, value=10.0, step=5.0)
+    value = b2.number_input("Value of a kept customer (GHS)", min_value=1.0, value=500.0, step=50.0)
+    save = b3.slider("Share of contacted drifters who stay", 0.01, 1.0, 0.20, 0.01)
+    be = L.break_even_precision(cost, value, save)
+    ok = tiers.assign(pays=tiers["precision"] >= be)
+    st.info(f"Break-even precision: **{be:.1%}**. " + " ".join(
+        f"{r.operating_point}: {'pays' if r.pays else 'does not pay'} ({r.precision:.1%})." for r in ok.itertuples()))
+    st.caption("Default figures are placeholders for illustration, not ABC Bank data: replace them with "
+               "Marketing's own costs and values.")

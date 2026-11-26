@@ -1,0 +1,21 @@
+# GitHub Actions: model, API, dashboard and monitoring tests - Python 3.11 (training versions)
+scikit-learn==1.9.1
+numpy==2.4.6
+pandas==3.1.1
+scipy==1.17.1
+joblib==1.6.0
+pyarrow>=15
+fairlearn>=0.11
+lightgbm>=4.3
+shap>=0.45
+lime>=0.2.0.1
+mlflow>=3.0
+fastapi>=0.110
+uvicorn>=0.29
+httpx>=0.27
+faker
+matplotlib
+plotly
+streamlit
+pytest>=8
+ruff
