@@ -1,3 +1,0 @@
-model,month,labels,roc_auc,recall,precision
-main,2016-02,available (May 2016),0.7449,0.7047,0.161
-inactive_only,2016-02,available (May 2016),0.8124,0.754,0.0759
