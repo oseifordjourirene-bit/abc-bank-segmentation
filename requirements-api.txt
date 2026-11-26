@@ -1,0 +1,10 @@
+# Live API container (Hugging Face Spaces and Docker Compose) - Python 3.11.
+# Model libraries pinned to the training environment so the saved model loads exactly.
+scikit-learn==1.9.1
+numpy==2.4.6
+pandas==3.1.1
+scipy==1.17.1
+joblib==1.6.0
+fastapi>=0.110
+uvicorn>=0.29
+pydantic>=2.6

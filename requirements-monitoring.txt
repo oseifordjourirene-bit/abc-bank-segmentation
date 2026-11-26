@@ -1,0 +1,6 @@
+# Monitoring and retraining container - Python 3.11 (install on top of requirements-api.txt)
+pyarrow>=15
+evidently>=0.7,<0.8
+mlflow>=3.0
+prefect>=3.1,<4
+fairlearn>=0.11
