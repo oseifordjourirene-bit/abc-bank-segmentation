@@ -1,10 +1,14 @@
 # Model Card – abc-bank-drift-model (version 1)
 
+_Updated 26 Nov 2026 for the final project: deployment, precision review, monitoring and retraining sections added._
+
 ## Model details
 - **Owner:** Irene Osei Fordjour, ABC Bank Segmentation project (BAN6800)
 - **Algorithm:** random_forest (scikit-learn pipeline: preprocessing + classifier)
 - **Trained:** 2026-11-19T03:41:12+00:00 · MLflow run `8b591270ea294e9da98d7a29489c5b2e`
 - **Decision threshold:** 0.4653 (chosen on cross-validated training predictions to reach recall ≥ 0.7)
+- **Registry status:** version 1, alias `champion`, tag `stage = Rejected` (misses the AUC bar). Not approved for live decisions.
+- **Live demo API:** https://abc-bank-drift-api.onrender.com/docs (public Santander data only; free tier sleeps after 15 idle minutes)
 
 ## Intended use
 - Rank active retail customers by their risk of drifting in the next three months, so the bank can send a reactivation offer early.
@@ -69,8 +73,36 @@ Seed stability: test ROC-AUC 0.746 ± 0.000 over 5 seeds.
 - 'Activity' is the source bank's own flag; ABC Bank's definition (BoG dormancy rules) may differ.
 - Counterfactual suggestions show associations, not proven causes; test offers with a control group.
 
+## Precision review and contact policy (final project)
+Precision at the agreed threshold is 16% because only 8.6% of customers drift and the threshold catches 70% of them. The three algorithms reach similar PR-AUC (0.21–0.27 against a 0.086 baseline), so the lever is how many customers to contact (`python -m src.model.precision_review`).
+
+| Contact level | Share flagged | Recall | Precision |
+| --- | --- | --- | --- |
+| Riskiest 5% | 5% | 23% | 39% |
+| Riskiest 10% (Tier 1) | 10% | 35% | 30% |
+| Riskiest 20% | 20% | 50% | 22% |
+| Agreed threshold | 38% | 70% | 16% |
+
+**Two-tier policy:** Tier 1, the riskiest 10%, gets a relationship-manager call (417 test customers, precision 30%); Tier 2, the rest of the flagged group, gets a low-cost digital nudge (1,154 customers, precision 11%). Together they keep 70% recall. The API returns each customer's `contact_tier`.
+
+## Explanations and audit
+Every `/predict` call returns and stores its top five factors (feature replacement against a typical customer), with a `request_id`, model version, inputs (behavioural only), score and decision (`api/explanation_store.py`). Retrieve with `GET /explanations/{request_id}`. Production retention: 7 years. The API refuses age, sex, nationality and province (HTTP 422).
+
 ## Monitoring after deployment
-- Monthly: recall and precision on customers whose outcome is known; alert if recall < 0.7.
-- Monthly: input drift (population stability index) on the top features; alert if PSI > 0.2.
-- Quarterly: fairness table by age band, sex and foreign-born; alert if any judged group leaves 0.8–1.25.
-- Retrain at least every 6 months or when an alert fires; new versions go through the MLflow registry.
+Run monthly by `flows/retrain_flow.py`; thresholds and owners in `docs/model_governance.md`.
+- Data drift: PSI per input against the training cohort; watch at 0.10, alert at 0.25.
+- Prediction drift: share of customers flagged; watch at ±5 points.
+- Fairness drift: offer rate per age band and sex ÷ overall rate (groups ≥ 500); alert outside 0.8–1.25.
+- Performance: recall, precision per tier and ROC-AUC once outcomes arrive (3 months later); alert if recall < 0.70 or AUC < 0.75.
+
+**Findings, March–May 2016 cohorts:** inputs stable (highest PSI 0.03) and the flagged share moved less than 1.3 points. Fairness drifted: the 18–24 offer rate fell from 0.79 to 0.53 of the overall rate, and 65+ stayed at 0.60–0.67. A labelled simulated shock (income −20%, one fewer active month for 30% of customers) raised every alarm (PSI 0.80 and 0.92; flagged share 38% → 56%).
+
+## Retraining and version history
+`src/model/retrain.py` refits the champion's configuration on the latest data and registers a candidate only through four gates: recall ≥ 0.70, ROC-AUC ≥ 0.75, AUC no more than 0.01 below the champion, and every judged group within 0.8–1.25. Promotion always needs human sign-off by the model owner and Digital Governance and Risk.
+
+| Version | Date | Status | Reason |
+| --- | --- | --- | --- |
+| 1 | 2026-11-19 | Champion, tagged Rejected | ROC-AUC 0.745 < 0.75; age band outside 0.8–1.25 |
+| 2 | 2026-11-26 | Candidate, Rejected | Reproduces v1 (AUC 0.7449); same failed gates |
+
+_Note: `src/model/run_all.py` regenerates this card from the Module 4 template; re-apply these final-project sections after retraining._
