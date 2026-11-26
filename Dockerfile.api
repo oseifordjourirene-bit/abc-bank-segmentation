@@ -1,4 +1,4 @@
-# ABC Bank drift model - live /predict API (Hugging Face Spaces / Docker Compose)
+# ABC Bank drift model - live /predict API (Render free web service / Docker Compose)
 FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PORT=7860 \
     EXPLANATION_DB=/app/logs/explanations.db
@@ -10,9 +10,10 @@ COPY api/ api/
 COPY src/__init__.py src/config.py src/
 COPY src/model/ src/model/
 COPY models/*.joblib models/*.json models/
-# Hugging Face runs containers as user 1000; the explanation store must be writable
+# Run as a non-root user; the explanation store must be writable
 RUN useradd --uid 1000 --create-home api && mkdir -p /app/logs && chown -R api /app
 USER api
 EXPOSE 7860
 HEALTHCHECK CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:${PORT}/health')"
+# Render sets PORT at run time; locally and in Docker Compose it defaults to 7860
 CMD ["sh", "-c", "uvicorn api.main:app --host 0.0.0.0 --port ${PORT}"]
